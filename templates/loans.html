@@ -1,0 +1,62 @@
+{% extends "base.html" %}{% block content %}<style>.loan-state{display:inline-flex;gap:5px;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700}.loan-state.paid{background:#dff5e8;color:#147548}.loan-state.active{background:#fff3d8;color:#9a6a08}.loan-state.cancelled{background:#fde8e7;color:#ad4a4a}.action-btn{padding:5px 8px;font-size:11px;margin:2px}.action-btn.edit{background:#e8f1ff;color:#2865a4}.action-btn.cancel{background:#fff;color:#ad4a4a;border:1px solid #edcccc}.action-btn.eye{background:#0d332c;color:#fff}</style>
+<h1>Préstamos</h1>
+<p class="muted">Consulta, actualiza y cancela préstamos conservando su historial.</p>
+<form class="filters" method="get">
+<input name="participant" value="{{ search }}" placeholder="Filtrar por participante, referido o documento">
+<select name="status"><option value="">Todos los estados</option><option value="active" {% if status == 'active' %}selected{% endif %}>Activos</option><option value="paid" {% if status == 'paid' %}selected{% endif %}>Pagados</option><option value="cancelled" {% if status == 'cancelled' %}selected{% endif %}>Cancelados</option></select>
+<button>Filtrar</button>{% if search %}<a href="{{ url_for('main.loans') }}">Limpiar</a>{% endif %}</form>
+<section class="card">
+<h2>Registrar préstamo</h2>
+<form method="post">
+<select name="participant_id" required>
+<option value="">Participante responsable</option>{% for p in participants %}<option value="{{ p.id }}">{{ p.full_name }}</option>{% endfor %}</select>
+<select name="loan_type" required>
+<option value="PARTICIPANT">Al participante · 5%</option>
+<option value="REFERRED">A referido · 10%</option>
+</select>
+<input name="referred_name" placeholder="Nombre del referido">
+<input name="referred_document" placeholder="Identificación del referido">
+<input name="principal" type="number" min="1" step="0.01" placeholder="Monto" required>
+<input name="term_months" type="number" min="1" max="60" placeholder="Meses" required>
+<input name="start_date" type="date" required>
+<button>Crear préstamo</button>
+</form>
+</section>
+<table>
+<thead>
+<tr>
+<th>Responsable</th>
+<th>Beneficiario</th>
+<th>Monto</th>
+<th>Tasa</th>
+<th>Plazo</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody>{% for loan in loans %}{% set remaining=loan.installments|sum(attribute='total_amount') - loan.installments|sum(attribute='paid_amount') %}{% set pending=loan.installments|selectattr('paid_amount','lt',1)|list|length %}<tr>
+<td>{{ loan.participant.full_name }}</td>
+<td>{% if loan.loan_type == 'REFERRED' %}{{ loan.referred_name }}<small>{{ loan.referred_document }}</small>{% else %}El participante{% endif %}</td>
+<td>${{ loan.principal }}</td>
+<td>{{ (loan.monthly_rate*100)|round(2) }}%</td>
+<td>{{ loan.term_months }} meses</td>
+<td>{% if loan.status == 'paid' %}<span class="loan-state paid">✓ Pagado</span>{% elif loan.status == 'active' %}<span class="loan-state active">● Activo</span>{% else %}<span class="loan-state cancelled">Cancelado</span>{% endif %}</td>
+<td>
+<a class="action-btn eye" href="{{ url_for('main.loan_detail', loan_id=loan.id) }}">◉ Ver plan</a>{% if loan.status == 'active' %}<details>
+<summary class="action-btn edit">Editar</summary>
+<form class="loan-edit-form" method="post" action="{{ url_for('main.update_loan', loan_id=loan.id) }}">
+<input name="principal" type="number" step="0.01" value="{{ loan.principal }}" required>
+<input name="term_months" type="number" min="1" max="60" value="{{ loan.term_months }}" required>
+<button>Guardar cambios</button>
+</form>
+</details>
+<form class="loan-cancel-form" method="post" action="{{ url_for('main.cancel_loan', loan_id=loan.id) }}">
+<button class="action-btn cancel">Cancelar préstamo</button>
+</form>{% endif %}</td>
+</tr>{% endfor %}</tbody>
+</table>
+<p>
+<a href="{{ url_for('main.annual_report') }}?year=2026">Reportes</a> · <a href="{{ url_for('main.participants') }}">Gestionar participantes</a>
+</p>
+<script>document.querySelectorAll('.loan-edit-form').forEach(function(f){f.addEventListener('submit',function(e){if(!confirm('¿Estás seguro de actualizar este préstamo y regenerar su plan de pagos?'))e.preventDefault()})});document.querySelectorAll('.loan-cancel-form').forEach(function(f){f.addEventListener('submit',function(e){if(!confirm('¿Estás seguro de cancelar este préstamo? El historial se conservará.'))e.preventDefault()})});</script>{% endblock %}
+

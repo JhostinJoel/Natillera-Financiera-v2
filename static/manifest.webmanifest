@@ -1,0 +1,13 @@
+{
+  "name": "Natillera Financiera",
+  "short_name": "Natillera",
+  "description": "Gestión de ahorros, préstamos y cierre financiero.",
+  "lang": "es-CO",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0d332c",
+  "background_color": "#f3f8f6",
+  "icons": [{"src":"/static/icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

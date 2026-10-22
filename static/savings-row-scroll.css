@@ -1,0 +1,22 @@
+ .savings-general-scroll{width:100%;height:13px;overflow-x:auto;overflow-y:hidden;margin:0 0 8px;border-radius:999px;background:#e8efec;-webkit-overflow-scrolling:touch}
+ .savings-general-scroll__content{height:1px}
+@media(max-width:700px){
+  .table-card{overflow-x:hidden!important;overflow-y:visible!important;background:transparent!important;box-shadow:none!important}
+  .table-card table{display:block!important;min-width:100%!important;width:100%!important;background:transparent!important}
+  .table-card thead{display:none!important}
+  .table-card thead tr{display:none!important}
+  .table-card thead th{flex:0 0 100px}.table-card thead th:first-child{flex-basis:220px;position:sticky;left:0;z-index:4}
+  .table-card tbody{display:block}.table-card tbody tr{display:flex;min-width:0;width:calc(100vw - 36px);max-width:calc(100vw - 36px);overflow-x:auto;overflow-y:hidden;background:linear-gradient(135deg,#ffffff 0%,#f7fbf9 100%);border:1px solid #dcebe4;border-radius:22px;margin:0 0 16px;padding:4px;box-shadow:0 8px 22px rgba(16,72,55,.10),inset 0 1px 0 rgba(255,255,255,.9);-webkit-overflow-scrolling:touch;scrollbar-width:thin;touch-action:pan-x;overscroll-behavior-x:contain;transition:transform .2s ease,box-shadow .2s ease}
+  .table-card tbody tr:active{transform:scale(.995);box-shadow:0 5px 14px rgba(16,72,55,.14)}
+  .table-card tbody td{flex:0 0 100px;min-width:100px;padding:14px 8px;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;flex-shrink:0}
+  .table-card tbody td:not(:first-child)::before{display:block;font-size:10px;font-weight:700;color:#71807a;margin-bottom:6px}
+  .table-card tbody td:nth-child(2)::before{content:'Enero'}.table-card tbody td:nth-child(3)::before{content:'Febrero'}.table-card tbody td:nth-child(4)::before{content:'Marzo'}.table-card tbody td:nth-child(5)::before{content:'Abril'}.table-card tbody td:nth-child(6)::before{content:'Mayo'}.table-card tbody td:nth-child(7)::before{content:'Junio'}.table-card tbody td:nth-child(8)::before{content:'Julio'}.table-card tbody td:nth-child(9)::before{content:'Agosto'}.table-card tbody td:nth-child(10)::before{content:'Septiembre'}.table-card tbody td:nth-child(11)::before{content:'Octubre'}.table-card tbody td:nth-child(12)::before{content:'Noviembre'}
+  .table-card tbody td:first-child{flex:0 0 220px;min-width:220px;position:sticky;left:0!important;margin-left:0!important;z-index:20!important;background:#f9fdfb!important;align-items:flex-start;border-radius:18px 0 0 18px;box-shadow:12px 0 20px -14px rgba(16,72,55,.45);overflow:clip!important;isolation:isolate;contain:paint;transform:translateZ(0)}
+  .table-card tbody td:first-child::after{content:'';position:absolute;inset:0 0 0 auto;width:3px;background:linear-gradient(#35b982,#16845e);opacity:.75}
+  .table-card tbody td:first-child .participant-cell{position:relative;z-index:2;padding:8px 10px 8px 4px;min-width:205px!important;flex-wrap:wrap;transition:transform .2s ease}
+  .table-card tbody tr:active td:first-child .participant-cell{transform:translateX(2px)}
+  .table-card tbody td:first-child .avatar{box-shadow:0 5px 12px rgba(22,132,94,.18);transition:transform .25s ease,box-shadow .25s ease}
+  .table-card tbody tr:hover td:first-child .avatar{transform:scale(1.06) rotate(-3deg);box-shadow:0 8px 18px rgba(22,132,94,.24)}
+  .table-card tbody tr:after{content:none}
+  .table-card .payment-form{min-width:88px}.table-card .participant-cell{min-width:220px!important;flex:0 0 220px!important;display:flex!important;align-items:flex-start!important}
+}

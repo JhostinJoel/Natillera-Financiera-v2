@@ -1,5 +1,7 @@
 <?php require_once __DIR__.'/../src/App.php'; require_once __DIR__.'/../src/LoanView.php'; require_once __DIR__.'/../src/Repository.php';
 $path=parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) ?: '/';
+$staticRoot=realpath(__DIR__.'/../static');$requested=realpath($staticRoot.'/'.ltrim(substr($path,8),'/'));
+if(str_starts_with($path,'/static/') && $staticRoot && $requested && str_starts_with($requested,$staticRoot.DIRECTORY_SEPARATOR) && is_file($requested)){ $types=['css'=>'text/css; charset=utf-8','js'=>'application/javascript; charset=utf-8','webmanifest'=>'application/manifest+json','svg'=>'image/svg+xml'];$ext=strtolower(pathinfo($requested,PATHINFO_EXTENSION));header('Content-Type',$types[$ext]??'application/octet-stream');readfile($requested);exit; }
 $action=$_POST['action']??'';
 if($_SERVER['REQUEST_METHOD']==='POST' && in_array($action,['participant_update','participant_toggle','participant_delete'],true)){$db=Database::connection();$id=(int)$_POST['participant_id'];if($action==='participant_update'){$s=$db->prepare('UPDATE participants SET full_name=?,document=?,phone=?,email=? WHERE id=?');$s->execute([trim($_POST['full_name']),trim($_POST['document']),trim($_POST['phone']??''),trim($_POST['email']??''),$id]);}elseif($action==='participant_toggle'){$s=$db->prepare('UPDATE participants SET active=1-active WHERE id=?');$s->execute([$id]);}else{(new Repository($db))->deleteParticipant($id);}header('Location: /participants');exit;}
 if(preg_match('#^/loans/(\d+)$#',$path,$match)){

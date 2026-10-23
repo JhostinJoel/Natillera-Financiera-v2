@@ -23,7 +23,8 @@
       participant_update:['Guardar cambios','Los datos del participante serán actualizados.'],
       participant_delete:['Eliminar participante','Esta acción eliminará al participante y su historial.'],
       participant_toggle:['Cambiar estado','El estado del participante será actualizado.'],
-      installment:['Registrar pago','El abono quedará registrado en el plan.']
+      installment:['Registrar pago','El abono quedará registrado en el plan.'],
+      loan_create:['Crear préstamo','Se generará el plan de pagos correspondiente.']
     };
     if(!messages[action])return;
     e.preventDefault();form.dataset.confirmed='1';

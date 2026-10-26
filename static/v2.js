@@ -10,7 +10,7 @@
     var money=function(v){return '$'+Number(v||0).toLocaleString('es-CO',{maximumFractionDigits:0})};
     if(action==='contribution'){
       var input=form.querySelector('[name=amount]'),raw=input?.value.trim(),paid=Number(form.dataset.paid||0),due=Number(form.dataset.due||0),amount=raw?Number(raw):due-paid;
-      e.preventDefault();form.dataset.confirmed='1';var done=function(){form.submit()};var cancelContribution=function(){delete form.dataset.confirmed};
+      e.preventDefault();form.dataset.confirmed='1';var done=function(){if(input)input.value=String(amount);form.submit()};var cancelContribution=function(){delete form.dataset.confirmed};
       if(window.Swal){Swal.fire({title:'¿Estás seguro?',html:'Cuota mensual: <b>'+money(due)+'</b><br>Abono que vas a registrar: <b>'+money(amount)+'</b><br>Abonado hasta ahora: <b>'+money(paid)+'</b>',icon:'question',showCancelButton:true,confirmButtonText:'Sí, guardar abono',cancelButtonText:'Cancelar',confirmButtonColor:'#0d332c'}).then(function(r){r.isConfirmed?done():cancelContribution()})}else if(window.confirm('¿Estás seguro?\nAbono: '+money(amount)))done();else cancelContribution();return;
     }
     if(action==='reset_contribution'){

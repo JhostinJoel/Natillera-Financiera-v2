@@ -9,5 +9,5 @@
   "orientation": "portrait-primary",
   "theme_color": "#0d332c",
   "background_color": "#f3f8f6",
-  "icons": [{"src":"/static/icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": [{"src":"/static/icons/natillera-512.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"},{"src":"/static/icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]
 }
